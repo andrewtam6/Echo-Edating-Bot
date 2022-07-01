@@ -34,7 +34,18 @@ module.exports = {
                     {name: '♦️ /profile edit', value: "Allows you to edit your own profile."},
                 )
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
-        } 
+        } else if (subcommand.toLowerCase() == "create") {
+            /**
+             * Requires you to collect:
+             *  An email,
+             *  
+             *  Editable Things:
+             *  A date of birth (WILL BE LOGGED EVERY EDIT) 
+             *  A main profile image
+             *  A Bio
+             *  
+             */
+        }
         
     },
 }
