@@ -20,7 +20,7 @@ module.exports = {
 
     callback: ({ interaction, args }) => {
 
-        const validSubcommands = ['help', 'start', 'settings'];
+        const validSubcommands = ['view', 'edit', 'create'];
         const [subcommand] = args;
 
         if (subcommand.toLowerCase() == "help" || !validSubcommands.includes(subcommand)) {
@@ -29,9 +29,9 @@ module.exports = {
                 .setTitle('ℹ️ Help Embed ℹ️')
                 .setDescription('This is the help embed for the sessions subcommands!')
                 .addFields(
-                    {name: '♦️ /session start', value: "Starts a session by dming you an embed to show you profiles to swipe on!"},
-                    {name: '♦️ /session settings <option> <value>', value: "Allows you to adjust what profiles you see by things such as location, games played, and age."},
-
+                    {name: '♦️ /profile create', value: "Starts the profile creation process in your DMs. Make sure to have dms on!"},
+                    {name: '♦️ /profile view', value: "Allows you to view your own profile."},
+                    {name: '♦️ /profile edit', value: "Allows you to edit your own profile."},
                 )
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } 
