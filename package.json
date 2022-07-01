@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/andrewtam6/Echo-Edating-Bot/issues"
   },
-  "homepage": "https://github.com/andrewtam6/Echo-Edating-Bot#readme"
+  "homepage": "https://github.com/andrewtam6/Echo-Edating-Bot#readme",
+  "dependencies": {
+    "discord.js": "^13.8.1"
+  }
 }
