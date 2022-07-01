@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { primary_color } = require('../config.json');
+const ProfileClass = require("../utils/classes/Profile");
 const { embed } = require("../utils/util");
 
 module.exports = {
@@ -36,6 +37,11 @@ module.exports = {
                 )
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
+            
+            const questions = ['Please input your date of birth in mm/dd/yyyy format.', 'Please input an image url to the image you want on your profile.', 'Please input a quick description of yourself. This will be monitored.']
+            const responses = [];
+            let i = 0;
+
             /**
              * Requires you to collect:
              *  An email,
@@ -47,8 +53,26 @@ module.exports = {
              *  
              *  
              */
-            const msg = await interaction.user.send().catch(err => interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}))
+            const msg = await interaction.user.send('Profile Creating Utilities: Please input an email. This will time out in 1 minute').catch(err => interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}))
+            const filter = (m) => { return m.author.id === interaction.user.id };
+
+            const collector = await msg.channel.createMessageCollector({
+                filter,
+                time: 60e3
+            })
+
+
+            collector.on('collect', async (message) => {
+                if (await ProfileClass.hasProfile(message) == true) return interaction.user.send({embeds: [embed('error', 'You already have a profile!')]})
+                if (i < questions.length - 1) { 
+                    responses.push(message);
+                    interaction.user.send(questions[i + 1]);
+                    i++;
+                } 
+            })
+
             
+            // End response
 
         }
         

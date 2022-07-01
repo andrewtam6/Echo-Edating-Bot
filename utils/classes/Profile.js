@@ -10,7 +10,14 @@ ProfileClass.create = (email, DOB, imageURL, Bio) => {
         mainProfileImage: imageURL,
         Bio: Bio,
     }).save();
-    
+}
+
+ProfileClass.hasProfile = async (email) => {
+    const result = await profileSchema.findOne({ email: email });
+    if (result == null) {
+        return false;
+    }
+    return true;
 }
 
 module.exports = ProfileClass;
