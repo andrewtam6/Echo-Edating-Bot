@@ -1,0 +1,19 @@
+{
+  "name": "echo-edating-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewtam6/Echo-Edating-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewtam6/Echo-Edating-Bot/issues"
+  },
+  "homepage": "https://github.com/andrewtam6/Echo-Edating-Bot#readme"
+}
