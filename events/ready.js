@@ -4,7 +4,7 @@ module.exports = {
     once: true,
     async execute(client) {
         client.user.setStatus('dnd');
-        client.user.setPrescence({activities: [{name: `Find people to connect with over discord!`, type: 'WATCHING'}]});
+        client.user.setPresence({activities: [{name: `Find people to connect with over discord!`}]});
     
         console.log(`Logged in as ${client.user.tag}`);
         Mongo.init();
