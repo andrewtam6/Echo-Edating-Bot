@@ -18,6 +18,11 @@ module.exports = {
         if (subcommand.toLowerCase() == "help") {
             const helpEmbed = new MessageEmbed()
                 .setColor(primary_color)
+                .setTitle('Sessions | Help Embed')
+                .setDescription('This is the help embed for the sessions subcommands! To utilize these, type /session <subcommand>')
+                .addFields(
+                    {name: 'start', ""}
+                )
         } 
         
         interaction.reply('Test!');
