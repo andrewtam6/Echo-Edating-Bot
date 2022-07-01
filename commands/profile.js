@@ -46,7 +46,7 @@ module.exports = {
              *  
              *  
              */
-            
+            interaction.user.send().catch(err => interaction.reply(''))
 
 
         }

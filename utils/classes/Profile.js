@@ -10,6 +10,7 @@ ProfileClass.create = (email, DOB, imageURL, Bio) => {
         mainProfileImage: imageURL,
         Bio: Bio,
     }).save();
+    
 }
 
 module.exports = ProfileClass;
