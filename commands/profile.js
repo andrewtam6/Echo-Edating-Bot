@@ -82,8 +82,12 @@ module.exports = {
 
 
                 if (!message.attachments.length > 0) {
-                    if (i == 2 && isImageUrl(message)) {
-                        if (i == 1 && !isNaN(parseInt(message))) {
+                    if (i == 2 && !isImage(message)) {
+                        interaction.user.send({embeds: [embed('error', 'You must input a valid image url.')]})
+                    } else {
+                        if (i == 1 && isNaN(parseInt(message))) {
+                            interaction.user.send({embeds: [embed('error', 'You must input a valid age.')]})
+                        } else {
                             if (i < questions.length - 1) { 
                                 responses.push(message.content);
                                 msg.edit({embeds: [embed('profile', questions[i + 1])]});
@@ -91,17 +95,13 @@ module.exports = {
                             } else {
                                 responses.push(message.content);
                                 collector.stop();
+                                i == 0;
                                 msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
                             }
-                        } else {
-                            interaction.user.send({embeds: embed('error', 'You must input a valid age.')})
-
                         }
-                    } else {
-                        interaction.user.send({embeds: embed('error', 'You must input a valid image url.')})
                     }
                 } else {
-                    interaction.user.send({embeds: embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')})
+                    interaction.user.send({embeds: [embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')]})
                 } 
                
             });
@@ -118,4 +118,8 @@ module.exports = {
         }
         
     },
+}
+
+function isImage(url) {
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
 }
