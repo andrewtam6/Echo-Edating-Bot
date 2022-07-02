@@ -15,8 +15,8 @@ module.exports = {
             .setColor('#42f2ff')
         } else if (type === 'profile') {
             return new MessageEmbed()
-            .setDescription('ℹ️ Profile System | ' + text)
-            .setColor('#42f2ff')
+            .setDescription('💻 Profile System 💻 | ' + text)
+            .setColor('#40f749')
             .setFooter({text: 'This will time out in 1 minute'})
         }
     }
