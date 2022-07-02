@@ -5,7 +5,7 @@ const profile = mongoose.Schema({
     gender: String,
     age: String,
     mainProfileImage: String,
-    Bio: String,
+    bio: String,
 })
 
 module.exports = mongoose.model('profile', profile, 'profiles')
