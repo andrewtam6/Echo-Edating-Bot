@@ -29,6 +29,7 @@ module.exports = {
             const helpEmbed = new MessageEmbed()
                 .setColor(primary_color)
                 .setTitle('ℹ️ Help Embed ℹ️')
+                .setTimestamp()
                 .setDescription('This is the help embed for the sessions subcommands!')
                 .addFields(
                     {name: '♦️ /profile create', value: "Starts the profile creation process in your DMs. Make sure to have dms on!"},
@@ -53,7 +54,7 @@ module.exports = {
              *  
              *  
              */
-            const msg = await interaction.user.send('Profile Creating Utilities: Please input an email. This will time out in 1 minute').catch(err => interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}))
+            const msg = await interaction.user.send({embeds: [embed('profile', 'Please input an email.')]}).catch(err => interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}))
             const filter = (m) => { return m.author.id === interaction.user.id };
 
             const collector = await msg.channel.createMessageCollector({
@@ -66,7 +67,7 @@ module.exports = {
                 if (await ProfileClass.hasProfile(message) == true) return interaction.user.send({embeds: [embed('error', 'You already have a profile!')]})
                 if (i < questions.length - 1) { 
                     responses.push(message);
-                    interaction.user.send(questions[i + 1]);
+                    interaction.user.send({embeds: [embed('profile', questions[i + 1])]});
                     i++;
                 } 
             })
