@@ -113,6 +113,19 @@ module.exports = {
             });
 
 
+        } else if (subcommand.toLowerCase() == "view") {
+            const profile = ProfileClass.getProfile(interaction.user.id);
+
+            const embed = new MessageEmbed()
+                .setColor(primary_color)
+                .setTitle(`Your Profile`)
+                .setDescription('This is your profile!')
+                .setThumbnail(profile.mainProfileImage)
+                .setTimestamp()
+                .addFields(
+                    {name: 'Age', value: profile.age},
+                    {name: 'Bio', value: profile.bio}
+                )
         }
         
     },
