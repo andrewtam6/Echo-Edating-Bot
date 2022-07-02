@@ -54,26 +54,39 @@ module.exports = {
              *  
              *  
              */
-            const msg = await interaction.user.send({embeds: [embed('profile', 'Please input an email.')]}).catch(err => interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}))
+            
+            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.user.send({embeds: [embed('error', 'You already have a profile!')]});
+            
+            const msg = await interaction.user.send({embeds: [embed('profile', 'Please input an email.')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
             const filter = (m) => { return m.author.id === interaction.user.id };
+
+
 
             const collector = await msg.channel.createMessageCollector({
                 filter,
                 time: 60e3
-            })
+            });
 
 
             collector.on('collect', async (message) => {
-                if (await ProfileClass.hasProfile(message) == true) return interaction.user.send({embeds: [embed('error', 'You already have a profile!')]})
+                if (!message.contains("@") && i == 0) {
+                    interaction.user.send({embeds: [embed('error', 'You must send a valid email!')]});
+                    interaction.user.send({embeds: [embed('profile', 'Please input an email.')]})
+                } 
                 if (i < questions.length - 1) { 
                     responses.push(message);
                     interaction.user.send({embeds: [embed('profile', questions[i + 1])]});
                     i++;
                 } 
-            })
+            });
 
-            
-            // End response
+            collector.on('end', () => {
+                
+                // Change this if more questions are added
+                ProfileClass.create(responses[0], responses[1], responses[2], responses[3]);
+                interaction.editReply({embeds: [embed('success', 'Successfully created a profile!')]});
+            });
+
 
         }
         

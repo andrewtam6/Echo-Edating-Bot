@@ -2,26 +2,26 @@ const profileSchema = require("../../schemas/profileSchema");
 
 const ProfileClass = {};
 
-ProfileClass.create = (email, DOB, imageURL, Bio) => {
+ProfileClass.create = (id, DOB, imageURL, Bio) => {
     // Saves DB Data
     new profileSchema({
-        email: email, 
+        userId: id, 
         DOB: DOB,
         mainProfileImage: imageURL,
         Bio: Bio,
     }).save();
 }
 
-ProfileClass.hasProfile = async (email) => {
-    const result = await profileSchema.findOne({ email: email });
+ProfileClass.hasProfile = async (id) => {
+    const result = await profileSchema.findOne({ id: id });
     if (result == null) {
         return false;
     }
     return true;
 }
 
-ProfileClass.getProfile = async (email) => {
-    const result = await profileSchema.findOne({email: email});
+ProfileClass.getProfile = async (id) => {
+    const result = await profileSchema.findOne({id: id});
     if (result == null) return false;
     return result;
 }
