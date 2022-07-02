@@ -1,9 +1,13 @@
 0.2:
     - Add the functionality for creating profiles
-    - 
 
 Version Not Assigned:
     Security:
         - Bio management through AI 
         - Report System
-        - 
+        - Basic filtering by age(people under 18 will not be put with people over 18)
+    New content:
+        - Interests in profile. 
+        - Basic match management
+        - Logged messaging system through the bot's dms.
+        

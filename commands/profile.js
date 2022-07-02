@@ -3,6 +3,7 @@ const { primary_color } = require('../config.json');
 const ProfileClass = require("../utils/classes/Profile");
 const { embed } = require("../utils/util");
 const wait = require('node:timers/promises').setTimeout;
+const isImageUrl = require('is-image-url');
 
 module.exports = {
     category: 'Main Functions',
@@ -57,41 +58,53 @@ module.exports = {
              *  
              */
             
+            // Confirms the user does not already have a profile
             if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.reply({ephemeral: true, embeds: [embed('error', 'You already have a profile!')]});
+            
+            // To ensure the interaction doesn't time out.
             interaction.deferReply({ ephemeral: true });
 
+
+            // Message collector
             const msg = await interaction.user.send({embeds: [embed('profile', 'Starting Profile Creation...')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
             const filter = (m) => { return m.author.id === interaction.user.id };
-
-
-
             const collector = await msg.channel.createMessageCollector({
                 filter,
                 time: 60e3
             });
 
+            // Makes the message show the first question
             msg.edit({embeds: [embed('profile', questions[0])]})
-            collector.on('collect', async (message) => {
 
-                if (message.attachments.length > 0) {
-                    interaction.user.send({embeds: embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')})
-                } else {
-                    if (i < questions.length - 1) { 
-                        responses.push(message.content);
-                        msg.edit({embeds: [embed('profile', questions[i + 1])]});
-                        i++;
+
+            collector.on('collect', async (message) => {
+                // Collector logic
+
+
+                if (!message.attachments.length > 0) {
+                    if (i == 2 && isImageUrl(message)) {
+                        if (i < questions.length - 1) { 
+                            responses.push(message.content);
+                            msg.edit({embeds: [embed('profile', questions[i + 1])]});
+                            i++;
+                        } else {
+                            responses.push(message.content);
+                            collector.stop();
+                            msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                        }
                     } else {
-                        responses.push(message.content);
-                        collector.stop();
-                        msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                        interaction.user.send({embeds: embed('error', 'You must use a valid image url.')})
                     }
+                } else {
+                    interaction.user.send({embeds: embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')})
                 } 
                
             });
 
             collector.on('end', () => {
-                console.log(responses);
                 ProfileClass.create(interaction.user.id, responses[0], responses[1], responses[2], responses[3]);
+
+
 
                 interaction.editReply({embeds: [embed('success', 'Successfully created a profile!')]});
             });
