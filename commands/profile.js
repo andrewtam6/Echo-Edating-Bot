@@ -38,7 +38,7 @@ module.exports = {
                 )
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
-            
+            interaction.deferReply({ ephemeral: true });
             const questions = ['Please input your date of birth in mm/dd/yyyy format.', 'Please input an image url to the image you want on your profile.', 'Please input a quick description of yourself. This will be monitored.']
             const responses = [];
             let i = 0;
