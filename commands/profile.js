@@ -44,20 +44,22 @@ module.exports = {
             let i = 0;
 
             /**
-             * Requires you to collect:
-             *  An email,
-             *  
              *  Editable Things:
              *  A date of birth (WILL BE LOGGED EVERY EDIT) 
+             *  Gender
              *  A main profile image
              *  A Bio
              *  
+             *  Future Additions(that can be added through a different system):
+             *     - Interests
+             *     - Stats from video games such as Valorant, MC, etc    
+             * 
              *  
              */
             
             if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.user.send({embeds: [embed('error', 'You already have a profile!')]});
             
-            const msg = await interaction.user.send({embeds: [embed('profile', 'Please input an email.')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
+            const msg = await interaction.user.send({embeds: [embed('profile', 'Starting Profile Creation...')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
             const filter = (m) => { return m.author.id === interaction.user.id };
 
 
@@ -78,8 +80,7 @@ module.exports = {
 
             collector.on('end', () => {
                 
-                // Change this if more questions are added
-                ProfileClass.create(responses[0], responses[1], responses[2], responses[3]);
+
                 interaction.editReply({embeds: [embed('success', 'Successfully created a profile!')]});
             });
 
