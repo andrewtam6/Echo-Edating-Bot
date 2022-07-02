@@ -114,25 +114,27 @@ module.exports = {
 
 
         } else if (subcommand.toLowerCase() == "view") {
-            if (!ProfileClass.hasProfile(interaction.user.id)) return interaction.reply({embeds: [embed('error', 'You do not have a profile.')]})
+            if (!await ProfileClass.hasProfile(interaction.user.id)) return interaction.reply({embeds: [embed('error', 'You do not have a profile.')]})
 
-            const profile = ProfileClass.getProfile(interaction.user.id);
+            const profile = await ProfileClass.getProfile(interaction.user.id);
 
-            const embed = new MessageEmbed()
+            const embedT = new MessageEmbed()
                 .setColor(primary_color)
                 .setTitle(`Your Profile`)
                 .setDescription('This is your profile!')
-                .setThumbnail(profile.mainProfileImage)
+                .setImage(profile.mainProfileImage)
                 .setTimestamp()
                 .addFields(
                     {name: 'Age', value: profile.age},
                     {name: 'Bio', value: profile.bio}
                 )
+
+            interaction.reply({ephemeral: true, embeds: [embedT]})
         }
         
     },
 }
 
 function isImage(url) {
-    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+    return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
 }

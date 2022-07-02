@@ -27,4 +27,14 @@ ProfileClass.getProfile = async (id) => {
     return result;
 }
 
+ProfileClass.getAllProfiles = async () => {
+    const results = await profileSchema.find();
+    return results;  
+}
+
+ProfileClass.getAllProfilesFiltered = async (filter) => {
+    const results = await profileSchema.find(filter);
+    return results;  
+}
+
 module.exports = ProfileClass;
