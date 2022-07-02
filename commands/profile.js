@@ -39,7 +39,7 @@ module.exports = {
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
             interaction.deferReply({ ephemeral: true });
-            const questions = ['Please input your date of birth in mm/dd/yyyy format.', 'Please input an image url to the image you want on your profile.', 'Please input a quick description of yourself. This will be monitored.']
+            const questions = ['What is your gender?', 'Please input your date of birth in mm/dd/yyyy format.', 'Please input an image url to the image you want on your profile.', 'Please input a quick description of yourself. This will be monitored.']
             const responses = [];
             let i = 0;
 
@@ -71,6 +71,13 @@ module.exports = {
 
 
             collector.on('collect', async (message) => {
+                /**
+                 * To-do:
+                 *  - Pass bio's through some sort of AI to ensure they aren't unsafe
+                 *  - 
+                 */
+
+
                 if (i < questions.length - 1) { 
                     responses.push(message);
                     interaction.user.send({embeds: [embed('profile', questions[i + 1])]});

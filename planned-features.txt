@@ -1,0 +1,6 @@
+0.2:
+    - Add the functionality for creating profiles
+    - 
+
+Version Not Assigned:
+    - 
