@@ -2,8 +2,6 @@ const { MessageEmbed } = require("discord.js");
 const { primary_color } = require('../config.json');
 const ProfileClass = require("../utils/classes/Profile");
 const { embed } = require("../utils/util");
-const wait = require('node:timers/promises').setTimeout;
-const isImageUrl = require('is-image-url');
 
 module.exports = {
     category: 'Main Functions',
