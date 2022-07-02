@@ -69,16 +69,19 @@ module.exports = {
                 time: 60e3
             });
 
-
+            msg.edit({embeds: [embed('profile', questions[0])]})
             collector.on('collect', async (message) => {
 
 
 
                 if (i < questions.length - 1) { 
                     responses.push(message);
-                    interaction.user.send({embeds: [embed('profile', questions[i + 1])]});
+                    msg.edit({embeds: [embed('profile', questions[i + 1])]});
                     i++;
-                } 
+                } else {
+                    msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                    collector.stop()
+                }
             });
 
             collector.on('end', () => {
