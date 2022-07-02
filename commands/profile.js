@@ -72,16 +72,19 @@ module.exports = {
             msg.edit({embeds: [embed('profile', questions[0])]})
             collector.on('collect', async (message) => {
 
-
-
-                if (i < questions.length - 1) { 
-                    responses.push(message);
-                    msg.edit({embeds: [embed('profile', questions[i + 1])]});
-                    i++;
+                if (message.attachments.length > 0) {
+                    interaction.user.send({embeds: embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')})
                 } else {
-                    msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
-                    collector.stop()
-                }
+                    if (i < questions.length - 1) { 
+                        responses.push(message);
+                        msg.edit({embeds: [embed('profile', questions[i + 1])]});
+                        i++;
+                    } else {
+                        msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                        collector.stop();
+                    }
+                } 
+               
             });
 
             collector.on('end', () => {
