@@ -2,10 +2,11 @@ const profileSchema = require("../../schemas/profileSchema");
 
 const ProfileClass = {};
 
-ProfileClass.create = (id, DOB, imageURL, Bio) => {
+ProfileClass.create = (id, gender, DOB, imageURL, Bio) => {
     // Saves DB Data
     new profileSchema({
-        userId: id, 
+        userId: id,
+        gender: gender,
         DOB: DOB,
         mainProfileImage: imageURL,
         Bio: Bio,
