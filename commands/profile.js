@@ -39,7 +39,7 @@ module.exports = {
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
             interaction.deferReply({ ephemeral: true });
-            const questions = ['What is your gender?', 'Please input your date of birth in mm/dd/yyyy format.', 'Please input an image url to the image you want on your profile.', 'Please input a quick description of yourself. This will be monitored.']
+            const questions = ['What is your gender?', 'How old are you?', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
             const responses = [];
             let i = 0;
 
@@ -71,11 +71,7 @@ module.exports = {
 
 
             collector.on('collect', async (message) => {
-                /**
-                 * To-do:
-                 *  - Pass bio's through some sort of AI to ensure they aren't unsafe
-                 *  - 
-                 */
+
 
 
                 if (i < questions.length - 1) { 
