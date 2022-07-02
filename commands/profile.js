@@ -69,10 +69,6 @@ module.exports = {
 
 
             collector.on('collect', async (message) => {
-                if (!message.contains("@") && i == 0) {
-                    interaction.user.send({embeds: [embed('error', 'You must send a valid email!')]});
-                    interaction.user.send({embeds: [embed('profile', 'Please input an email.')]})
-                } 
                 if (i < questions.length - 1) { 
                     responses.push(message);
                     interaction.user.send({embeds: [embed('profile', questions[i + 1])]});
