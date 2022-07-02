@@ -39,7 +39,6 @@ module.exports = {
                 )
             interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
-            interaction.deferReply({ ephemeral: true });
             const questions = ['What is your gender?', 'How old are you?', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
             const responses = [];
             let i = 0;
@@ -58,9 +57,9 @@ module.exports = {
              *  
              */
             
-            wait(200);
-            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.defer.({embeds: [embed('error', 'You already have a profile!')]});
-            
+            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.reply({embeds: [embed('error', 'You already have a profile!')]});
+            interaction.deferReply({ ephemeral: true });
+
             const msg = await interaction.user.send({embeds: [embed('profile', 'Starting Profile Creation...')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
             const filter = (m) => { return m.author.id === interaction.user.id };
 
