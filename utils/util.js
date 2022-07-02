@@ -13,6 +13,10 @@ module.exports = {
             return new MessageEmbed()
             .setDescription('ℹ️ ' + text)
             .setColor('#42f2ff')
+        } else if (type === 'profile') {
+            return new MessageEmbed()
+            .setDescription('ℹ️ Profile System | ' + text)
+            .setColor('#42f2ff')
         }
     }
 }

@@ -20,4 +20,10 @@ ProfileClass.hasProfile = async (email) => {
     return true;
 }
 
+ProfileClass.getProfile = async (email) => {
+    const result = await profileSchema.findOne({email: email});
+    if (result == null) return false;
+    return result;
+}
+
 module.exports = ProfileClass;
