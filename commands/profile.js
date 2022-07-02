@@ -114,6 +114,8 @@ module.exports = {
 
 
         } else if (subcommand.toLowerCase() == "view") {
+            if (!ProfileClass.hasProfile(interaction.user.id)) return interaction.reply({embeds: [embed('error', 'You do not have a profile.')]})
+
             const profile = ProfileClass.getProfile(interaction.user.id);
 
             const embed = new MessageEmbed()
