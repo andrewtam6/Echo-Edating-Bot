@@ -85,7 +85,7 @@ module.exports = {
             });
 
             collector.on('end', () => {
-                
+                ProfileClass.create(interaction.user.id, responses[0], responses[1], responses[2], responses[3]);
 
                 interaction.editReply({embeds: [embed('success', 'Successfully created a profile!')]});
             });
