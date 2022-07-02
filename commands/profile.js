@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const { primary_color } = require('../config.json');
 const ProfileClass = require("../utils/classes/Profile");
 const { embed } = require("../utils/util");
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     category: 'Main Functions',
@@ -57,7 +58,8 @@ module.exports = {
              *  
              */
             
-            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.user.send({embeds: [embed('error', 'You already have a profile!')]});
+            wait(200);
+            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.defer.({embeds: [embed('error', 'You already have a profile!')]});
             
             const msg = await interaction.user.send({embeds: [embed('profile', 'Starting Profile Creation...')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
             const filter = (m) => { return m.author.id === interaction.user.id };
