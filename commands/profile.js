@@ -37,7 +37,7 @@ module.exports = {
                     {name: '♦️ /profile view', value: "Allows you to view your own profile."},
                     {name: '♦️ /profile edit', value: "Allows you to edit your own profile."},
                 )
-            interaction.reply({embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
+            interaction.reply({ephemeral: true, embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
             const questions = ['What is your gender?', 'How old are you?', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
             const responses = [];
@@ -57,7 +57,7 @@ module.exports = {
              *  
              */
             
-            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.reply({embeds: [embed('error', 'You already have a profile!')]});
+            if (await ProfileClass.hasProfile(interaction.user.id) == true) return interaction.reply({ephemeral: true, embeds: [embed('error', 'You already have a profile!')]});
             interaction.deferReply({ ephemeral: true });
 
             const msg = await interaction.user.send({embeds: [embed('profile', 'Starting Profile Creation...')]}).catch(err => { interaction.reply({embeds: [embed('error', 'Error dming you on discord. Do you have dms on?')]}); return; });
@@ -77,18 +77,20 @@ module.exports = {
                     interaction.user.send({embeds: embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')})
                 } else {
                     if (i < questions.length - 1) { 
-                        responses.push(message);
+                        responses.push(message.content);
                         msg.edit({embeds: [embed('profile', questions[i + 1])]});
                         i++;
                     } else {
-                        msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                        responses.push(message.content);
                         collector.stop();
+                        msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
                     }
                 } 
                
             });
 
             collector.on('end', () => {
+                console.log(responses);
                 ProfileClass.create(interaction.user.id, responses[0], responses[1], responses[2], responses[3]);
 
                 interaction.editReply({embeds: [embed('success', 'Successfully created a profile!')]});
