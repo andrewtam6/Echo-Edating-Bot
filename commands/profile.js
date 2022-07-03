@@ -102,7 +102,7 @@ module.exports = {
 
             collector.on('end', () => {
                 const isValidData = ProfileClass.checkData({ gender: responses[0], age: responses[1], imageURL: responses[2]});
-                if (isValidData != true) { interaction.user.send({embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData}`)]}); return interaction.editReply({ephemeral: true, embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData}`)]}); }
+                if (isValidData != true) { interaction.user.send({embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData.toString()}`)]}); return interaction.editReply({ephemeral: true, embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData}`)]}); }
                 
                 ProfileClass.create(interaction.user.id, responses[0], responses[1], responses[2], responses[3]);
 
