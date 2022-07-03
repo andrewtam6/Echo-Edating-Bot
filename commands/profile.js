@@ -20,7 +20,7 @@ module.exports = {
     slash: true,
     testOnly: true,
 
-    callback: async ({ interaction, args }) => {
+    callback: async ({ interaction, args, client }) => {
 
         const validSubcommands = ['view', 'edit', 'create'];
         const [subcommand] = args;
@@ -110,20 +110,26 @@ module.exports = {
 
 
         } else if (subcommand.toLowerCase() == "view") {
-            if (!await ProfileClass.hasProfile(interaction.user.id)) return interaction.reply({embeds: [embed('error', 'You do not have a profile.')]})
+            if (!await ProfileClass.hasProfile(interaction.user.id)) return interaction.reply({ephemeral: true, embeds: [embed('error', 'You do not have a profile.')]})
 
             const profile = await ProfileClass.getProfile(interaction.user.id);
 
             const embedT = new MessageEmbed()
                 .setColor(primary_color)
-                .setTitle(`Your Profile`)
-                .setDescription('This is your profile!')
+                .setAuthor({name: 'Echo Edating', iconURL: client.user.displayAvatarURL()})
+                .setTitle(`${interaction.user.username}'s Profile`)
+                .setDescription(`**Bio:** ${profile.bio}`)
                 .setImage(profile.mainProfileImage.toString())
                 .setTimestamp()
                 .addFields(
-                    {name: 'Age', value: profile.age},
-                    {name: 'Bio', value: profile.bio}
+                    {name: '\u200B', value: '\u200B'},
+                    {name: 'Age', value: profile.age, inline: true},
+                    {name: 'Gender', value: profile.gender, inline: true},
+
                 )
+
+                .setFooter({text: 'Profile provided by Echo Edating', iconURL: client.user.displayAvatarURL()})
+
 
             interaction.reply({ephemeral: true, embeds: [embedT]})
         }
