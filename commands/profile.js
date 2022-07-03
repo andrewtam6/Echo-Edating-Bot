@@ -40,6 +40,9 @@ module.exports = {
         } else if (subcommand.toLowerCase() == "create") {
             const questions = ['What is your gender?', 'How old are you?', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
             const responses = [];
+
+            const genders = ['male', 'female', 'non-binary', 'other'];
+
             let i = 0;
 
             /**
@@ -86,16 +89,21 @@ module.exports = {
                         if (i == 1 && isNaN(parseInt(message))) {
                             interaction.user.send({embeds: [embed('error', 'You must input a valid age.')]})
                         } else {
-                            if (i < questions.length - 1) { 
-                                responses.push(message.content);
-                                msg.edit({embeds: [embed('profile', questions[i + 1])]});
-                                i++;
+                            if (i == 0 && !genders.contains(message)) {
+                                interaction.user.send({embeds: [embed('error', `Please input a valid gender. Valid genders: ${genders.toString()}`)]})
                             } else {
-                                responses.push(message.content);
-                                collector.stop();
-                                i == 0;
-                                msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                                if (i < questions.length - 1) { 
+                                    responses.push(message.content);
+                                    msg.edit({embeds: [embed('profile', questions[i + 1])]});
+                                    i++;
+                                } else {
+                                    responses.push(message.content);
+                                    collector.stop();
+                                    i == 0;
+                                    msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                                }
                             }
+                            
                         }
                     }
                 } else {
