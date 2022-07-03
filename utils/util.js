@@ -26,13 +26,6 @@ module.exports = {
         
         if (type.toLowerCase() === 'gender') {
             return value.toLowerCase();
-        } else if (type.toLowerCase() === 'age') {
-            return value.toLowerCase();
-
-        } else if (type.toLowerCase() === 'gender') {
-            
-        } else if (type.toLowerCase() === 'gender') {
-            
-        }
+        } 
     }
 }

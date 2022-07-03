@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const { primary_color } = require('../config.json');
 const ProfileClass = require("../utils/classes/Profile");
-const { embed } = require("../utils/util");
+const { embed, format } = require("../utils/util");
 
 module.exports = {
     category: 'Main Functions',
@@ -38,10 +38,8 @@ module.exports = {
                 )
             interaction.reply({ephemeral: true, embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
-            const questions = ['What is your gender?', 'How old are you?', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
+            const questions = ['What is your gender? Please input "Male", "Female," or "Other".', 'How old are you? Ex: 18', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
             const responses = [];
-
-            const genders = ['male', 'female', 'non-binary', 'other'];
 
             let i = 0;
 
@@ -104,7 +102,7 @@ module.exports = {
                 const isValidData = await ProfileClass.checkData({ gender: responses[0], age: responses[1], imageURL: responses[2]});
                 if (isValidData != true) { interaction.user.send({embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData.toString()}`)]}); return interaction.editReply({ephemeral: true, embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData}`)]}); }
                 
-                ProfileClass.create(interaction.user.id, responses[0], responses[1], responses[2], responses[3]);
+                ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3]);
 
 
 
