@@ -1,8 +1,13 @@
 const profileSchema = require("../../schemas/profileSchema");
+const JIMP = require('jimp');
 
 const ProfileClass = {};
 
 ProfileClass.create = (id, gender, age, imageURL, bio) => {
+    JIMP.read(imageURL, (err, img) => {
+        if (err) throw err;
+        img.resize(400, 400)
+    })
     // Saves DB Data
     new profileSchema({
         userId: id,

@@ -122,7 +122,6 @@ module.exports = {
                 .setImage(profile.mainProfileImage.toString())
                 .setTimestamp()
                 .addFields(
-                    {name: '\u200B', value: '\u200B'},
                     {name: 'Age', value: profile.age, inline: true},
                     {name: 'Gender', value: profile.gender, inline: true},
 
