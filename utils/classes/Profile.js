@@ -38,14 +38,19 @@ ProfileClass.getAllProfilesFiltered = async (filter) => {
 }
 
 ProfileClass.checkData = async (data) => {
+    const errors = [];
     // This isn't to be hateful. It's just to make coding easier. You are valid no matter what you identify as <3
     const genders = ['male', 'female', 'other'];
 
-    if (!genders.contains(data.gender)) return `INVALID_GENDER_INPUT`;
-    if (!isImage(data.imageURL)) return 'INVALID_IMAGE_URL_INPUT';
-    if (!isNaN(parseInt(data.age))) return 'INVALID_AGE_INPUT';
+    if (!genders.contains(data.gender)) { errors.push(`INVALID_GENDER_INPUT`); } 
+    if (!isImage(data.imageURL)) { errors.push('INVALID_IMAGE_URL_INPUT'); } 
+    if (!isNaN(parseInt(data.age))) { errors.push('INVALID_AGE_INPUT'); }
 
-    return true;
+    if (errors.length == 0) {
+        return true;
+    } else {
+        return errors;
+    }
 
 
 }
