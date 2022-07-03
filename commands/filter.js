@@ -26,7 +26,9 @@ module.exports = {
 
     callback: ({ interaction, args }) => {
         const [option, value] = args;
-        const validOptions = ['edit'];
+        const validOptions = ['age', 'gender'];
+        
+        
         /**
          * To-Do:
          * Load Profiles through a function in the 
