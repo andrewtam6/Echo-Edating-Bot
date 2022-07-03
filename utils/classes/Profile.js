@@ -41,7 +41,7 @@ ProfileClass.checkData = async (number, data) => {
     // This isn't to be hateful. It's just to make coding easier. You are valid no matter what you identify as <3
     const genders = ['male', 'female', 'other'];
 
-    if (!genders.contains(data) && number == 0) { return {
+    if (!genders.includes(data.toLowerCase()) && number == 0) { return {
         error: 'INVALID_GENDER_INPUT',
         validInputs: genders,
     }; } 
@@ -49,7 +49,7 @@ ProfileClass.checkData = async (number, data) => {
         error: 'INVALID_IMAGE_URL_INPUT',
         validInputs: 'Any url that leads to an image.'
     }; } 
-    if (!isNaN(parseInt(data)) && number == 1) { return {
+    if (isNaN(parseInt(data)) && number == 1) { return {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
     }; }

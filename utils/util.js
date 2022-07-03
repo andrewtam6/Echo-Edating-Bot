@@ -17,7 +17,7 @@ module.exports = {
             return new MessageEmbed()
             .setDescription('💻 Profile System 💻 | ' + text)
             .setColor('#40f749')
-            .setFooter({text: 'This will time out in 1 minute'})
+            .setFooter({text: 'This will time out in 5 minutes'})
         }
     },
     format: (type, value) => {

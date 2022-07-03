@@ -69,7 +69,7 @@ module.exports = {
             const filter = (m) => { return m.author.id === interaction.user.id };
             const collector = await msg.channel.createMessageCollector({
                 filter,
-                time: 60e3
+                time: 300e3
             });
 
             // Makes the message show the first question
@@ -82,7 +82,7 @@ module.exports = {
 
                 if (!message.attachments.length > 0) {
                     const check = await ProfileClass.checkData(i, message.content);
-                    if (check != true) return interaction.user.send({embeds: [embed('error', `Invalid input. Valid inputs: ${check}`)]}) 
+                    if (check != true) return interaction.user.send({embeds: [embed('error', `Invalid input. Valid inputs: ${check.validInputs}`)]}) 
                     if (i < questions.length - 1) { 
                         responses.push(message.content);
                         msg.edit({embeds: [embed('profile', questions[i + 1])]});
@@ -118,7 +118,7 @@ module.exports = {
                 .setColor(primary_color)
                 .setTitle(`Your Profile`)
                 .setDescription('This is your profile!')
-                .setImage(profile.mainProfileImage)
+                .setImage(profile.mainProfileImage.toString())
                 .setTimestamp()
                 .addFields(
                     {name: 'Age', value: profile.age},
