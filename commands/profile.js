@@ -81,16 +81,18 @@ module.exports = {
 
 
                 if (!message.attachments.length > 0) {
-                    /*                                 if (i < questions.length - 1) { 
-                                    responses.push(message.content);
-                                    msg.edit({embeds: [embed('profile', questions[i + 1])]});
-                                    i++;
-                                } else {
-                                    responses.push(message.content);
-                                    collector.stop();
-                                    i == 0;
-                                    msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
-                                }*/
+                    const check = await ProfileClass.checkData(i, message.content);
+                    if (check != true) return interaction.user.send({embeds: [embed('error', `Invalid input. Valid inputs: ${check}`)]}) 
+                    if (i < questions.length - 1) { 
+                        responses.push(message.content);
+                        msg.edit({embeds: [embed('profile', questions[i + 1])]});
+                        i++;
+                    } else {
+                        responses.push(message.content);
+                        collector.stop();
+                        i == 0;
+                        msg.edit({embeds: [embed('profile', 'You have answered the questions and your profile has successfully been created!')]})
+                    }
                         
                 } else {
                     interaction.user.send({embeds: [embed('error', 'You must not add attachments to your messages. Please instead use image urls for images!')]})
@@ -98,10 +100,7 @@ module.exports = {
                
             });
 
-            collector.on('end', async () => {
-                const isValidData = await ProfileClass.checkData({ gender: responses[0], age: responses[1], imageURL: responses[2]});
-                if (isValidData != true) { interaction.user.send({embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData.toString()}`)]}); return interaction.editReply({ephemeral: true, embeds: [embed('error', `There may have been an error with your responses. Error code: ${isValidData}`)]}); }
-                
+            collector.on('end', async () => {                
                 ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3]);
 
 
