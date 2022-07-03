@@ -1,12 +1,24 @@
 const profileSchema = require("../../schemas/profileSchema");
 const JIMP = require('jimp');
 
+const { ImgurClient } = require('imgur');
+const client = new ImgurClient({
+    clientId: process.env.IMGUR_CLIENT_ID,
+    clientSecret: process.env.IMGUR_CLIENT_SECRET
+})
+
 const ProfileClass = {};
 
 ProfileClass.create = (id, gender, age, imageURL, bio) => {
     JIMP.read(imageURL, (err, img) => {
         if (err) throw err;
-        img.resize(400, 400)
+        img.resize(400, 400).getBase64(JIMP.AUTO, (e, i) => {
+            if (e) throw e;
+            client.upload({
+                image: i,
+                type: 'base64'
+            })
+        })
     })
     // Saves DB Data
     new profileSchema({
