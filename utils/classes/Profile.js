@@ -37,4 +37,22 @@ ProfileClass.getAllProfilesFiltered = async (filter) => {
     return results;  
 }
 
+ProfileClass.checkData = async (data) => {
+    // This isn't to be hateful. It's just to make coding easier. You are valid no matter what you identify as <3
+    const genders = ['male', 'female', 'other'];
+
+    if (!genders.contains(data.gender)) return `INVALID_GENDER_INPUT`;
+    if (!isImage(data.imageURL)) return 'INVALID_IMAGE_URL_INPUT';
+    if (!isNaN(parseInt(data.age))) return 'INVALID_AGE_INPUT';
+
+    return true;
+
+
+}
+
+
+function isImage(url) {
+    return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+}
+
 module.exports = ProfileClass;
