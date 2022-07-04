@@ -1,8 +1,6 @@
 const profileSchema = require("../../schemas/profileSchema");
 const JIMP = require('jimp');
-const { createReadStream, unlink } = require('fs');
 const { ImgurClient } = require('imgur');
-const path = require("path");
 
 const client = new ImgurClient({
     clientId: process.env.IMGUR_CLIENT_ID,
@@ -12,31 +10,29 @@ const client = new ImgurClient({
 const ProfileClass = {};
 
 ProfileClass.create = (id, gender, age, imageURL, bio) => {
-    // let results;
+    JIMP.read(imageURL, async (err, img) => {
+        if (err) throw err;
+        img.resize(400, 400).getBase64(JIMP.AUTO, async (e, i) => {
+            if (e) throw e;
+            const b64 = i.split('data:image/jpeg;base64,')[1];
+            const results = await client.upload({
+                image: b64,
+                type: 'base64'
+            }).catch(err => console.error(err));
+            // Saves DB Data
+            new profileSchema({
+                userId: id,
+                gender: gender,
+                age: age,
+                mainProfileImage: results.data.link,
+                bio: bio,
+            }).save();
+        })
 
-    // JIMP.read(imageURL, async (err, img) => {
-    //     if (err) throw err;
-    //     img.resize(400, 400).getBuffer(JIMP.AUTO, async (e, i) => {
-    //         if (e) throw e;
-    //         i.write(path.resolve('', 'images'));
-    //         results = await client.upload({
-    //             image: createReadStream(path.resolve('', 'images')),
-    //             type: 'stream'
-    //         })
-    //     })
-
-    // })
+    })
     setTimeout(() => {
-        // console.log(results);
-        // Saves DB Data
-        new profileSchema({
-            userId: id,
-            gender: gender,
-            age: age,
-            mainProfileImage: imageURL,
-            bio: bio,
-        }).save();
-    }, 1e3)
+
+    }, 2e3)
 }
 
 ProfileClass.hasProfile = async (id) => {
