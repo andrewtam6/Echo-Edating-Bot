@@ -1,0 +1,7 @@
+This is an example of what to put in your dotenv file if you wish to develop onto this bot:
+
+TOKEN=(Discord Token)   | Discord Bot Token. 
+DB_URL=(MongoDB Url)     | Echo Edating use MongoDB to manage data. Therefore, a database url is required. 
+VERSION=(Version Number)              | For version management.
+IMGUR_CLIENT_ID=(Imgur Client Id)     | Register an application with imgur's api and get this
+IMGUR_CLIENT_SECRET=(Imgur Client Secret) | ^^
