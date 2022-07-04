@@ -18,7 +18,7 @@ module.exports = {
          */
 
         interaction.deferReply();
-        interaction.user.send({embeds: [embed('')]})
+
         
     },
 }
