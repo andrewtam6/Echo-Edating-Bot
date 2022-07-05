@@ -81,12 +81,10 @@ ProfileClass.checkData = async (number, data) => {
     }; } else if (isNaN(parseInt(data)) && number == 1) { return {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
-    }; } else if (!countryList.contains(data) && number == 3) {
-        return { 
-            error: 'INVALID_COUNTRY_INPUT',
-            validInputs: countryList
-        }
-    } 
+    }; } else if (!countryList.contains(data) && number == 3) { return { 
+        error: 'INVALID_COUNTRY_INPUT',
+        validInputs: countryList
+    }; } 
 
     return true;
 
