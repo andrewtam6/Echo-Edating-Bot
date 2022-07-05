@@ -1,5 +1,7 @@
-0.2:
-    - Add the functionality for creating profiles
+Features Finished:
+    - Profile Creation (0.2)
+    - Self profile viewing && design for embed (0.2)
+    
 
 Version Not Assigned:
     Security:

@@ -30,9 +30,9 @@ module.exports = {
         const validOptions = ['age_range', 'gender'];
 
         if (!validOptions.contains(option)) return interaction.reply({embeds: [embed('error', `Invalid Option. Valid options: ${validOptions.toString()}`)]})
-        if (option == 'age_range') {
-
-        } else if (option == 'gender') {
+        if (option == validOptions[0]) {
+            
+        } else if (option == validOptions[1]) {
             
         }
         /**

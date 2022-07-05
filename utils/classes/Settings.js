@@ -2,12 +2,20 @@ const settingsSchema = require("../../schemas/settingsSchema");
 
 const SettingsClass = {};
 
-SettingsClass.saveInitialSettings = (id) => {
-    new settingsSchema({
-        userId: id,
-        ageRange: "N/A",
-        preferredGender: "N/A",
-    })
+SettingsClass.saveInitialSettings = (id, isUnder18) => {
+    if (isUnder18 == true) {
+        new settingsSchema({
+            userId: id,
+            ageRange: "13-18",
+            preferredGender: "N/A",
+        })
+    } else {
+        new settingsSchema({
+            userId: id,
+            ageRange: "N/A",
+            preferredGender: "N/A",
+        })
+    }
 }
 
 SettingsClass.hasFilter = async (id) => {

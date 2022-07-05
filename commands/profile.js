@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const { primary_color } = require('../config.json');
 const ProfileClass = require("../utils/classes/Profile");
+const SettingsClass = require("../utils/classes/Settings");
 const { embed, format } = require("../utils/util");
 
 module.exports = {
@@ -98,6 +99,12 @@ module.exports = {
 
             collector.on('end', async () => {  
                 if ((i + 1) == questions.length) {
+                    if (parseInt(responses[1]) < 18) {
+                        SettingsClass.saveInitialSettings(interaction.user.id, true);
+                    } else {
+                        SettingsClass.saveInitialSettings(interaction.user.id, false);
+                    }
+                    
                     ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag, responses[5], responses[4]);
                     return interaction.editReply({ephemeral: true, embeds: [embed('success', 'Successfully created a profile!')]});
                 }
