@@ -96,12 +96,12 @@ module.exports = {
                
             });
 
-            collector.on('end', async (collected) => {                
-                if (collected.size == questions.size) {
+            collector.on('end', async () => {  
+                if ((i + 1) == questions.length) {
                     ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag, responses[5], responses[4]);
-                    interaction.editReply({ephemeral: true, embeds: [embed('success', 'Successfully created a profile!')]});
+                    return interaction.editReply({ephemeral: true, embeds: [embed('success', 'Successfully created a profile!')]});
                 }
-                interaction.editReply({ephemeral: true, embeds: [embed('error', 'Profile creation timed out!')]});
+                return interaction.editReply({ephemeral: true, embeds: [embed('error', 'Profile creation timed out!')]});
             });
 
 
@@ -120,8 +120,8 @@ module.exports = {
                 .addFields(
                     {name: 'Age', value: profile.age, inline: true},
                     {name: 'Gender', value: profile.gender, inline: true},
-                    {name: '\u200B', value: '\u200B'},
-                    {name: 'Province/State', value: profile.province, inline: true},
+                    {name: '\u200B', value: '\u200B', inline: true}, 
+                    {name: 'Province', value: profile.province, inline: true},
                     {name: 'Country', value: profile.country, inline: true},
                 )
 

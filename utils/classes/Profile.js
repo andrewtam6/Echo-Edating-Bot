@@ -81,7 +81,7 @@ ProfileClass.checkData = async (number, data) => {
     }; } else if (isNaN(parseInt(data)) && number == 1) { return {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
-    }; } else if (!countryList.includes(data.toLowerCase()) && number == 4) { 
+    }; } else if (!countryList.includes(data.toUpperCase()) && number == 4) { 
         return { 
             error: 'INVALID_COUNTRY_INPUT',
             validInputs: `Valid alpha-2 country code. See https://www.iban.com/country-codes`
@@ -97,6 +97,11 @@ ProfileClass.checkData = async (number, data) => {
 
 function isImage(url) {
     return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+}
+
+ProfileClass.getCountryByCode = async (country) => {
+    const countries = Array.from(Object.values(countryModule.countries).map((item) => item.name));
+    return (countries[])
 }
 
 module.exports = ProfileClass;
