@@ -1,6 +1,7 @@
 const profileSchema = require("../../schemas/profileSchema");
 const JIMP = require('jimp');
 const { ImgurClient } = require('imgur');
+const countryModule = require('countries-list');
 
 const client = new ImgurClient({
     clientId: process.env.IMGUR_CLIENT_ID,
@@ -9,7 +10,7 @@ const client = new ImgurClient({
 
 const ProfileClass = {};
 
-ProfileClass.create = (id, gender, age, imageURL, bio) => {
+ProfileClass.create = (id, gender, age, imageURL, bio, tag, province, country) => {
     JIMP.read(imageURL, async (err, img) => {
         if (err) throw err;
         img.resize(400, 400).getBase64(JIMP.AUTO, async (e, i) => {
@@ -22,17 +23,20 @@ ProfileClass.create = (id, gender, age, imageURL, bio) => {
             // Saves DB Data
             new profileSchema({
                 userId: id,
+                discordTag: tag,
+
                 gender: gender,
                 age: age,
+
+                province: province,
+                country: country,
+
                 mainProfileImage: results.data.link,
                 bio: bio,
             }).save();
         })
 
     })
-    setTimeout(() => {
-
-    }, 2e3)
 }
 
 ProfileClass.hasProfile = async (id) => {
@@ -75,6 +79,17 @@ ProfileClass.checkData = async (number, data) => {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
     }; }
+    if (number == 3) {
+        // https://stackoverflow.com/questions/29919596/how-do-i-get-a-list-of-countries-in-my-website
+        const countryCodes = Object.keys(countryModule.countries);
+        const countryList = countryCodes.map(code => countryModule.countries[code].name);
+        if (!countryList.contains(data)) {
+            return { 
+                error: 'INVALID_COUNTRY_INPUT',
+                validInputs: countryList
+            }
+        }
+    }
 
     return true;
 

@@ -5,7 +5,7 @@ const { embed, format } = require("../utils/util");
 
 module.exports = {
     category: 'Main Functions',
-    description: 'Starts a session',
+    description: 'Allows you to manage profile-related things',
     aliases: ['s'],
 
     options: [
@@ -38,22 +38,18 @@ module.exports = {
                 )
             interaction.reply({ephemeral: true, embeds: [helpEmbed], content: `<@${interaction.user.id}>`})
         } else if (subcommand.toLowerCase() == "create") {
-            const questions = ['What is your gender? Please input "Male", "Female," or "Other".', 'How old are you? Ex: 18', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?']
+            const questions = ['What is your gender? Please input "Male", "Female," or "Other".', 'How old are you? Ex: 18', 'What image would you like to use for your profile. Be sure to use a url.', 'What would you like your bio to be?', 'What country do you live in?', 'What province/state do you live in?']
             const responses = [];
 
             let i = 0;
 
             /**
              *  Editable Things:
-             *  A date of birth (WILL BE LOGGED EVERY EDIT) 
-             *  Gender
-             *  A main profile image
-             *  A Bio
              *  
              *  Future Additions(that can be added through a different system):
              *     - Interests
              *     - Stats from video games such as Valorant, MC, etc    
-             * 
+             *     - Location
              *  
              */
             
@@ -101,7 +97,7 @@ module.exports = {
             });
 
             collector.on('end', async () => {                
-                ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3]);
+                ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag);
 
 
 
