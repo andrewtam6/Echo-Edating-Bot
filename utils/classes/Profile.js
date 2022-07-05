@@ -67,27 +67,24 @@ ProfileClass.checkData = async (number, data) => {
     // This isn't to be hateful. It's just to make coding easier. You are valid no matter what you identify as <3
     const genders = ['male', 'female', 'other'];
 
+
+    // https://stackoverflow.com/questions/29919596/how-do-i-get-a-list-of-countries-in-my-website
+    const countryCodes = Object.keys(countryModule.countries);
+    const countryList = countryCodes.map(code => countryModule.countries[code].name);
+    
     if (!genders.includes(data.toLowerCase()) && number == 0) { return {
         error: 'INVALID_GENDER_INPUT',
         validInputs: genders,
-    }; } 
-    if (!isImage(data) && number == 2) { return {
+    }; } else if (!isImage(data) && number == 2) { return {
         error: 'INVALID_IMAGE_URL_INPUT',
         validInputs: 'Any url that leads to an image.'
-    }; } 
-    if (isNaN(parseInt(data)) && number == 1) { return {
+    }; } else if (isNaN(parseInt(data)) && number == 1) { return {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
-    }; }
-    if (number == 3) {
-        // https://stackoverflow.com/questions/29919596/how-do-i-get-a-list-of-countries-in-my-website
-        const countryCodes = Object.keys(countryModule.countries);
-        const countryList = countryCodes.map(code => countryModule.countries[code].name);
-        if (!countryList.contains(data)) {
-            return { 
-                error: 'INVALID_COUNTRY_INPUT',
-                validInputs: countryList
-            }
+    }; } else if (!countryList.contains(data) && number == 3) {
+        return { 
+            error: 'INVALID_COUNTRY_INPUT',
+            validInputs: countryList
         }
     }
 
