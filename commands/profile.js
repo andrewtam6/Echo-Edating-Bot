@@ -78,7 +78,7 @@ module.exports = {
                 // Attachments break everything
                 if (!message.attachments.length > 0) {
                     const check = await ProfileClass.checkData(i, message.content);
-                    if (check != true) return interaction.user.send({embeds: [embed('error', `Invalid input. Valid inputs: ${check.validInputs}`)]}) 
+                    if (check != true) return interaction.user.send({embeds: [embed('error', `Invalid input. Valid inputs: ${check.validInputs.toString()}`)]}) 
                     if (i < questions.length - 1) { 
                         responses.push(message.content);
                         msg.edit({embeds: [embed('profile', questions[i + 1])]});
