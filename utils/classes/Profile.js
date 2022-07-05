@@ -99,9 +99,9 @@ function isImage(url) {
     return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
 }
 
-ProfileClass.getCountryByCode = async (country) => {
-    const countries = Array.from(Object.values(countryModule.countries).map((item) => item.name));
-    return (countries[])
+ProfileClass.getCountryByCode = async (code) => {
+    const countries = Array.from(Object.keys(countryModule.countries).map((item) => countryModule.countries[code].name));
+    return (countries[0])
 }
 
 module.exports = ProfileClass;
