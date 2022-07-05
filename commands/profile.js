@@ -97,7 +97,7 @@ module.exports = {
             });
 
             collector.on('end', async () => {                
-                ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag);
+                ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag, responses[5], responses[4]);
 
 
 

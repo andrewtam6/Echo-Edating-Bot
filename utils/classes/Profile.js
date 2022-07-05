@@ -86,7 +86,7 @@ ProfileClass.checkData = async (number, data) => {
             error: 'INVALID_COUNTRY_INPUT',
             validInputs: countryList
         }
-    }
+    } 
 
     return true;
 
