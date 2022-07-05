@@ -96,12 +96,12 @@ module.exports = {
                
             });
 
-            collector.on('end', async () => {                
-                ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag, responses[5], responses[4]);
-
-
-
-                interaction.editReply({ephemeral: true, embeds: [embed('success', 'Successfully created a profile!')]});
+            collector.on('end', async (collected) => {                
+                if (collected.size == questions.size) {
+                    ProfileClass.create(interaction.user.id, format('gender', responses[0]), responses[1], responses[2], responses[3], interaction.user.tag, responses[5], responses[4]);
+                    interaction.editReply({ephemeral: true, embeds: [embed('success', 'Successfully created a profile!')]});
+                }
+                interaction.editReply({ephemeral: true, embeds: [embed('error', 'Profile creation timed out!')]});
             });
 
 
@@ -120,7 +120,9 @@ module.exports = {
                 .addFields(
                     {name: 'Age', value: profile.age, inline: true},
                     {name: 'Gender', value: profile.gender, inline: true},
-
+                    {name: '\u200B', value: '\u200B'},
+                    {name: 'Province/State', value: profile.province, inline: true},
+                    {name: 'Country', value: profile.country, inline: true},
                 )
 
                 .setFooter({text: 'Profile provided by Echo Edating', iconURL: client.user.displayAvatarURL()})

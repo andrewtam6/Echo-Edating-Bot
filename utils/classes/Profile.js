@@ -69,9 +69,9 @@ ProfileClass.checkData = async (number, data) => {
 
 
     // https://stackoverflow.com/questions/29919596/how-do-i-get-a-list-of-countries-in-my-website
-    const countryCodes = Object.keys(countryModule.countries);
-    const countryList = countryCodes.map(code => countryModule.countries[code].name);
+    const countryList = Array.from(Object.keys(countryModule.countries));
     
+
     if (!genders.includes(data.toLowerCase()) && number == 0) { return {
         error: 'INVALID_GENDER_INPUT',
         validInputs: genders,
@@ -81,10 +81,12 @@ ProfileClass.checkData = async (number, data) => {
     }; } else if (isNaN(parseInt(data)) && number == 1) { return {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
-    }; } else if (!countryList.contains(data) && number == 3) { return { 
-        error: 'INVALID_COUNTRY_INPUT',
-        validInputs: countryList
-    }; } 
+    }; } else if (!countryList.includes(data.toLowerCase()) && number == 4) { 
+        return { 
+            error: 'INVALID_COUNTRY_INPUT',
+            validInputs: `Valid alpha-2 country code. See https://www.iban.com/country-codes`
+        }; 
+    } 
 
     return true;
 
