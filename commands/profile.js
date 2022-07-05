@@ -75,7 +75,7 @@ module.exports = {
             collector.on('collect', async (message) => {
                 // Collector logic
 
-
+                // Attachments break everything
                 if (!message.attachments.length > 0) {
                     const check = await ProfileClass.checkData(i, message.content);
                     if (check != true) return interaction.user.send({embeds: [embed('error', `Invalid input. Valid inputs: ${check.validInputs}`)]}) 
