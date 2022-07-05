@@ -101,7 +101,8 @@ function isImage(url) {
 
 ProfileClass.getCountryByCode = async (code) => {
     const countries = Array.from(Object.keys(countryModule.countries).map((item) => countryModule.countries[code].name));
-    return (countries[0])
+    console.log(countries.length);
+    return countries[0];
 }
 
 module.exports = ProfileClass;
