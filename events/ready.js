@@ -16,5 +16,6 @@ module.exports = {
             commandsDir: path.resolve('', 'commands'),
             testServers: ['824439264833306666']
         })
+
     }
 }

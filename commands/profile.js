@@ -122,7 +122,7 @@ module.exports = {
                     {name: 'Gender', value: profile.gender, inline: true},
                     {name: '\u200B', value: '\u200B', inline: true}, 
                     {name: 'Province', value: profile.province, inline: true},
-                    {name: 'Country', value: profile.country, inline: true},
+                    {name: 'Country', value: ProfileClass.getCountryByCode(profile.country), inline: true},
                 )
 
                 .setFooter({text: 'Profile provided by Echo Edating', iconURL: client.user.displayAvatarURL()})
