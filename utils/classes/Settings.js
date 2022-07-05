@@ -8,13 +8,13 @@ SettingsClass.saveInitialSettings = (id, isUnder18) => {
             userId: id,
             ageRange: "13-18",
             preferredGender: "N/A",
-        })
+        }).save();
     } else {
         new settingsSchema({
             userId: id,
             ageRange: "N/A",
             preferredGender: "N/A",
-        })
+        }).save();
     }
 }
 
