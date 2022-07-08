@@ -78,7 +78,7 @@ ProfileClass.checkData = async (number, data) => {
     }; } else if (!isImage(data) && number == 2) { return {
         error: 'INVALID_IMAGE_URL_INPUT',
         validInputs: 'Any url that leads to an image.'
-    }; } else if (isNaN(parseInt(data)) && number == 1) { return {
+    }; } else if ((isNaN(parseInt(data)) || parseInt(data) < 13) && number == 1) { return {
         error: 'INVALID_AGE_INPUT',
         validInputs: 'A number representing your age.'
     }; } else if (!countryList.includes(data.toUpperCase()) && number == 4) { 

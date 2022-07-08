@@ -45,7 +45,7 @@ module.exports = {
 
             } else if (currentFilter.isUnderEighteen == true) {
                 if (parseInt(values[1]) > 18) return interaction.reply({ephemeral: true, embeds: [embed('error', 'Invalid filter. Users 18 and over can not match with users that are under the age of 18.')]})
-
+            
             }
             // if (p)
         } else if (option == validOptions[1]) {
